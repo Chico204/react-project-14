@@ -46,9 +46,40 @@ export default function DessertCart() {
               <img src={product.image} alt={product.name} className='rounded-xl h-40 w-full object-cover mb-3'/>
               <h3 className='text-md font-semibold'>{product.name}</h3>
               <p className="text-sm text-gray-600">${product.price.toFixed(2)}</p>
+              {cart[product.id] ? (
+                <div className='flex itms-center justify-between mt-2 '>
+                  <button onClick={()=> decreaseQty(product.id)} className='bg-gray-300 px-3 py-1 rounded'>-</button>
+                <span className='text-orange-500 font-semibold'>{cart[product.id]}</span>
+                    <button onClick={() => addToCart(product)} className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded">+</button>
+                </div>
+              ) : ( 
+                <button className='mt-2 w-full bg-white border hover:bg-gray-100 px-4 py-2 rounded ' onClick={()=> addToCart(product)}>Add to Cart </button>
+              )}
             </div>
-          ))}
+           ))}
         </div>
+
+        <div className="lg:max-w-sm w-full bg-white rounded-2xl p-6 shadow-lg">
+          <h2 className='capitalize text-xl font-bold mb-4 '>your cart</h2>
+           {Object.entries(cart).map(([id, qty]) => {
+              const item = products.find(p => p.id == id);
+              return (
+                <div key={id} className="flex justify-between items-center">
+                  <div>
+                    <p className="text-sm font-medium">{item.name}</p>
+                    <p className="text-xs text-gray-500">{qty} x ${item.price.toFixed(2)}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-semibold">${(item.price * qty).toFixed(2)}</p>
+                    <button onClick={() => decreaseQty(id)} className="text-xs text-red-500">✕</button>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+         <div className="mt-4 border-t pt-4 text-lg font-bold text-right">${totalCost.toFixed(2)}</div>
+          <div className="mt-2 text-xs text-green-700">✅ This is a <strong>carbon-neutral</strong> delivery</div>
+          <button className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded" onClick={confirmOrder}>Confirm Order</button>
       </div>
     </div>
   );
