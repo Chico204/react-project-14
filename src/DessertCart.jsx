@@ -42,21 +42,22 @@ const confirmOrder = () => {
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 flex-1">
           {products.map(product => (
-            <div key={product.id} className={`border rounded-2xl p-3 ${cart[product.id] ? 'border-orange-500' : 'border-transparent'} bg-white shadow-sm`}>
-              <img src={product.image} alt={product.name} className="rounded-xl h-40 w-full object-cover mb-3" />
-              <h3 className="text-md font-semibold">{product.name}</h3>
-              <p className="text-sm text-gray-500">${product.price.toFixed(2)}</p>
+            <div key={product.id} className={`border rounded-2xl p-3 ${cart[product.id] ? 'border-orange-500' : 'border-transparent'} bg-white shadow-sm `}>
+              <img src={product.image} alt={product.name} className="rounded-xl h-50 w-full object-cover mb-3" />
+              <h3 className=" font-semibold">{product.name}</h3>
+              <p className="text-xl text-orange-600 font-semibold">${product.price.toFixed(2)}</p>
+              <div className=' flex justify-center'>
               {cart[product.id] ? (
-                <div className="flex items-center justify-between mt-2">
-                  <button onClick={() => decreaseQty(product.id)} className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">−</button>
-                  <span className="text-orange-500 font-semibold">{cart[product.id]}</span>
-                  <button onClick={() => addToCart(product)} className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded">+</button>
+                <div className="flex items-center justify-between mt-2 bg-orange-600 rounded-full p-1 relative top-7 w-50">
+                  <button onClick={() => decreaseQty(product.id)} className="bg-orange-600 px-3 py-1 border-1  rounded-full text-white">−</button>
+                  <span className="text-white font-semibold">{cart[product.id]}</span>
+                  <button onClick={() => addToCart(product)} className="bg-orange-600 border-1  text-white px-3 py-1 rounded-full">+</button>
                 </div>
               ) : (
-                <button className="mt-2 w-full bg-white border hover:bg-gray-100 px-4 py-2 rounded" onClick={() => addToCart(product)}>
+                <button className="add mt-2  bg-white border hover:bg-gray-100 px-4 py-2 rounded-full font-bold relative top-7  w-50 " onClick={() => addToCart(product)}>
                  Add to Cart
                 </button>
-              )}
+              )}</div>
             </div>
           ))}
         </div>
@@ -81,7 +82,7 @@ const confirmOrder = () => {
             })}
           </div>
           <div className="mt-4 border-t pt-4 text-lg font-bold text-right">${totalCost.toFixed(2)}</div>
-          <div className="mt-2 text-xs text-green-700">✅ This is a <strong>carbon-neutral</strong> delivery</div>
+          <div className="mt-2 text-xs text-green-700 bg-[#fff9f5] p-1 flex justify-center">✅ This is a <strong> carbon-neutral</strong> delivery</div>
           <button className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded" onClick={confirmOrder}>Confirm Order</button>
         </div>
       </div>
