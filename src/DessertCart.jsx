@@ -48,13 +48,13 @@ const confirmOrder = () => {
               <p className="text-xl text-orange-600 font-semibold">${product.price.toFixed(2)}</p>
               <div className=' flex justify-center'>
               {cart[product.id] ? (
-                <div className="flex items-center justify-between mt-2 bg-orange-600 rounded-full p-1 relative top-7 w-50">
+                <div className="flex items-center justify-between mt-2 bg-orange-600 rounded-full p-1 relative top-7 w-50 cursor-pointer">
                   <button onClick={() => decreaseQty(product.id)} className="bg-orange-600 px-3 py-1 border-1  rounded-full text-white">−</button>
                   <span className="text-white font-semibold">{cart[product.id]}</span>
                   <button onClick={() => addToCart(product)} className="bg-orange-600 border-1  text-white px-3 py-1 rounded-full">+</button>
                 </div>
               ) : (
-                <button className="add mt-2  bg-white border hover:bg-gray-100 px-4 py-2 rounded-full font-bold relative top-7  w-50 " onClick={() => addToCart(product)}>
+                <button className="add mt-2  bg-white border hover:bg-gray-100 px-4 py-2 rounded-full font-bold relative top-7  w-50 cursor-pointer" onClick={() => addToCart(product)}>
                  Add to Cart
                 </button>
               )}</div>
@@ -63,7 +63,7 @@ const confirmOrder = () => {
         </div>
 
         <div className="lg:max-w-sm w-full bg-white rounded-2xl p-6 shadow-lg">
-          <h2 className="text-xl font-bold mb-4">Your Cart ({totalItems})</h2>
+          <h2 className="text-xl font-bold mb-4 text-orange-600">Your Cart ({totalItems})</h2>
           <div className="space-y-2">
             {Object.entries(cart).map(([id, qty]) => {
               const item = products.find(p => p.id == id);
@@ -83,15 +83,16 @@ const confirmOrder = () => {
           </div>
           <div className="mt-4 border-t pt-4 text-lg font-bold text-right">${totalCost.toFixed(2)}</div>
           <div className="mt-2 text-xs text-green-700 bg-[#fff9f5] p-1 flex justify-center">✅ This is a <strong> carbon-neutral</strong> delivery</div>
-          <button className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded" onClick={confirmOrder}>Confirm Order</button>
+          <button className="mt-4 w-full bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full font-semibold cursor-pointer" onClick={confirmOrder}>Confirm Order</button>
         </div>
       </div>
 
       {showModal && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+  <div className="fixed inset-0 flex items-center justify-center bg-[#5149455d] bg-opacity-40 z-50">
     <div className="bg-white rounded-xl p-8 shadow-lg max-w-md w-full text-center">
-      <h2 className="text-2xl font-bold mb-4">🎉 Order Confirmed!</h2>
-      <div className="mb-4 max-h-48 overflow-y-auto">
+      <h2 className="text-2xl font-bold mb-4 flex justify-start">🎉 Order Confirmed!</h2>
+      <p className="text-gray-600 mb-6 text-left">We hope you enjoy your food</p>
+      <div className="mb-4 max-h-48 overflow-y-auto bg-[#fff9f5] p-1">
         {Object.entries(cart).map(([id, qty]) => {
           const item = products.find(p => p.id == id);
           return (
@@ -99,16 +100,16 @@ const confirmOrder = () => {
               <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover mr-4" />
               <div className="text-left flex-1">
                 <p className="font-semibold">{item.name}</p>
-                <p className="text-sm text-gray-500">{qty} x ${item.price.toFixed(2)}</p>
+                <p className="text-sm text-gray-500"> <span className='text-orange-600 font-bold'>{qty} x</span> ${item.price.toFixed(2)}</p>
               </div>
-              <div className="font-semibold">${(item.price * qty).toFixed(2)}</div>
+              <div className="font-semibold ">${(item.price * qty).toFixed(2)}</div>
             </div>
           );
         })}
       </div>
-      <p className="text-lg font-bold mb-6">Total: ${totalCost.toFixed(2)}</p>
-      <p className="text-gray-600 mb-6">Thank you for your purchase. Your delicious desserts are on their way!</p>
-      <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full" onClick={closeModal}>Close</button>
+      <p className="text-lg font-semibold mb-6 flex justify-between"><span className='text-sm  text-gray-600'>Order Total</span> ${totalCost.toFixed(2)}</p>
+      
+      <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full w-full cursor-pointer" onClick={closeModal}>Start New Order</button>
     </div>
   </div>
 )}
